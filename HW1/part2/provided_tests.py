@@ -12,7 +12,7 @@ Tests = [("z", "z", True),
          ("e*", "eeeeee", True),
          ("e*", "eeezeee", False),
          ("z?", "z", True),
-         ("z?", "", True),asdf
+         ("z?", "", True),
          ("z?", "y", False),
          ("z|y.x?", "", False),
          ("z|y.x?", "y", True),

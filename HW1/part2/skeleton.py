@@ -3,7 +3,42 @@ import ply.yacc as yacc
 
 # Build the lexer
 lexer = lex.lex()
+tokens = ['LPAREN','RPAREN','STAR','OR','QUES','CH',"DOT","UNION"]
+t_CH = r'[a-zA-Z]'
+t_UNION = r'\|'
+t_DOT = r'\.'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_STAR = r'\*'
+t_OR = r'\|'
+t_QUES = r'\?'
 
+from typing import TypedDict, Unpack
+class Leaf(TypedDict):
+    charactor: str
+
+class Op(TypedDict):
+    lhs :str
+    rhs :str
+    op :str
+
+def get_leaf(**kwargs: Unpack[Leaf])-> None:
+    for k in kwargs.items():
+        return Leaf(k)
+
+def get_op(**kwargs: Unpack[Op])-> None:
+    for k,v1,v2 in kwargs.items():
+        return Op(k,v1,v2)
+
+def make_leaf(re1)-> Leaf:
+    return get_leaf(charactor=char)
+
+def make_star(re1)-> Leaf:
+    if re1 is None:
+        return None
+    if is_epsilon(re1):
+        return re1
+    return get_leaf(charactor=char)
 ## Nullable function starting here:
 
 # Top level Nullable function: this function takes an RE (re) as an
@@ -13,7 +48,18 @@ lexer = lex.lex()
 
 # Implement this function
 def nullable(re):
-    pass
+    if isinstance(re,Leaf):
+        if re is None:
+            return re
+        else:
+            return None
+    elif isinstance(re,Op):
+        if re.op == "CONCAT":
+            return nullable(re.lhs) and nullable(re.rhs)
+        elif re.op == "OR":
+            return nullable(re.lhs) or nullable(re.rhs)
+        elif re.op == "STAR":
+            return make_leaf("")
 
 # derivative function starting here:
 
@@ -33,8 +79,10 @@ def nullable(re):
 
 # implement this function:
 def derivative_re(char, re):
-    pass
-
+    if re is None:
+        return None
+    elif isinstance(re, Leaf):
+        pass
 parser = yacc.yacc()
 
 # High-level function to match a string using regular experession
