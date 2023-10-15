@@ -3,7 +3,7 @@
 Tests = [   
     {
 	"Name"    : "Yiwei 1",
-	"Outcome" : [0],
+	"Outcome" : [1],
 	"Program" : """
                 x = 1 * 1 ^ 1 * (1 + 1) - 1;
                 print(x);
@@ -11,7 +11,7 @@ Tests = [
     },
     {
         "Name"    : "Yiwei 2",
-        "Outcome" : "SymbolTableException",
+        "Outcome" : [140],
         "Program" : """
                     x = 62 + 78;
                     {
@@ -21,6 +21,7 @@ Tests = [
                     {
                         x = 3;
                     }
+                    print(y);
                    """
     },
     {
@@ -33,7 +34,7 @@ Tests = [
     },
     {
         "Name"    : "Yiwei 4",
-        "Outcome" : "SymbolTableException",
+        "Outcome" : [0],
         "Program" : """
                     x = 2;
                     y = 3;
