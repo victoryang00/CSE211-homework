@@ -119,7 +119,7 @@ def make_union(re1, re2) -> Op:
     elif re2 is None:
         return re1
     if isinstance(re1, Leaf) and isinstance(re2, Leaf):
-        if re1.char == "" and re2.char == "":
+        if re1.character == "" and re2.character == "":
             return re1
     return Op(re1, re2, "UNION")
 
