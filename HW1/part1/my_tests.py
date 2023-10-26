@@ -155,5 +155,24 @@ Tests = [
                 }
                 y = x;
                """
+    },
+    {
+	"Name"    : "Jack 9",
+	"Outcome" : "ParsingException",
+	"Program" : """
+                x = 10 + 10;
+                y = 10 + 10;
+                y = 10 // 10;
+               """
+    },
+    {
+	"Name"    : "Jack 10",
+	"Outcome" : "ParsingException",
+	"Program" : """
+                x = 10 + 10;
+                y = 10 + 10;
+                y = 10 / 10;
+                y = 10 & 10;
+               """
     }
     ]
