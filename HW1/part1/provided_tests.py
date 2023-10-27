@@ -1,7 +1,7 @@
 Tests = [
     {
 	"Name"    : "Test 1",
-	"Outcome" : [16],
+	"Outcome" : [16.0],
 	"Program" : """
                  x = 1 + 1;
                  y = x + x;
@@ -11,7 +11,7 @@ Tests = [
     },
     {
 	"Name"    : "Test 2",
-        "Outcome" : [21,30],
+        "Outcome" : [21.0,30.0],
 	"Program" : """
                     x = 1 + 2 * 10;
                     y = (1+2) * 10;
@@ -21,7 +21,7 @@ Tests = [
     },
     {
 	"Name"    : "Test 3",
-	"Outcome" : [-5,3],
+	"Outcome" : [-5.0,3.0],
 	"Program" : """
                     x = 2 - 3 - 4;
                     y = 2 - (3 - 4);

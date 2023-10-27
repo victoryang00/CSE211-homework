@@ -2,6 +2,15 @@ import ply.lex as lex
 import ply.yacc as yacc
 import sys
 
+
+
+# def remove_tailing_zeros(float):
+#     if int(float) == float:
+#         return int(float)
+#     else:
+#         return float
+    
+    
 # You don't need to implement any more of these
 # exceptions; just throw them when required.
 class SymbolTableException(Exception):
@@ -75,35 +84,6 @@ def t_newline(t):
     
 lexer = lex.lex()
 
-# lexer.input("1.01 1 0 10 1.5 0.5 00.5")
-# lexer.input("100120930000.00203231")
-# lexer.input("100120930000.0020323100")
-# lexer.input("0.0")
-# lexer.input("00100.100")
-# lexer.input("00100.1001")
-# lexer.input("0 1 2 3 4 5 6 7 8 9 10 11 12 13")
-# lexer.input("^&@9")
-# lexer.input("""
-# x = 5 + 4 * 5;
-# i = 1 + 1 * 0;
-# print(i);
-# {
-#  l = 5 ^ x;
-# {
-#    k = 5 + 7;
-# }
-# }
-# q = x / i;
-# print(q);
-# """)
-
-# x = lexer.token()
-# while x is not None:
-#     print(x)
-#     x = lexer.token()
-    
-# exit(1)
-
 #define production rules here
 
 # I don't understand really why this is needed but found it in the PLY documentation to fix unreachability errors.
@@ -136,7 +116,8 @@ def p_assignment(p):
 
 def p_print(p):
     "print : PRINT LPAR ID RPAR SEMI"
-    to_print.append(int(ST.lookup(p[3]))) # this is wrong on so many levels but.... might need a function to cut tailing 0's on python floats.
+    # to_print.append(remove_tailing_zeros(ST.lookup(p[3])))
+    to_print.append(ST.lookup(p[3]))
 
 def p_scope(p):
     "scope : scope_start statement_list scope_end"
@@ -209,12 +190,6 @@ def p_factor_id(p):
 def p_error(p):
     print(f"Parse Error!, {p}", file=sys.stderr)
     raise ParsingException()
-
-# precedence = [
-#     ('right', 'CARROT'),
-#     ('left', 'PLUS', 'MINUS'),
-#     ('left', 'MULT', 'DIV'),
-# ]
 
 parser = yacc.yacc(debug=True)
 
