@@ -81,6 +81,7 @@ def compute_LiveOut(CFG, UEVar, VarKill, VarDomain, mode="PO"):
             if temp != LiveOut[n]:
                 changed = True
                 LiveOut[n] = temp
+    print("counter", counter)
     return LiveOut
 
 
@@ -137,18 +138,13 @@ def compute_VarKill(CFG) -> dict:
 def compute_VarDomain(CFG):
     # Initialize VarDomain to be the empty set of variables
     VarDomain = set({})
-    for n in CFG.nodes():
-        print(get_node_instruction(n))
+    # for n in CFG.nodes():
+    #     print(get_node_instruction(n))
 
     for n in CFG.nodes():
         var1, var2 = parse_instruction(get_node_instruction(n))
-        VarDomain = (
-            VarDomain.union(var1)
-            if var1
-            else VarDomain.union(var2)
-            if var2
-            else VarDomain
-        )
+        VarDomain = VarDomain.union(var1) if var1 is not None else VarDomain
+        VarDomain = VarDomain.union(var2) if var2 is not None else VarDomain
     return VarDomain
 
 
@@ -159,6 +155,10 @@ def compute_VarDomain(CFG):
 def find_undefined_variables(input_python_file):
     # Convert the python file into a CFG
     CFG = get_graph(input_python_file)
+
+    print("VarDomain", compute_VarDomain(CFG))
+    print("UEVar", compute_UEVar(CFG))
+    print("VarKill", compute_VarKill(CFG))
 
     # Get LiveOut
     LiveOut = compute_LiveOut(
