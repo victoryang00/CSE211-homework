@@ -18,13 +18,13 @@ The topic of migration in the scenario of heterogeneous binary offloading and re
 
 Usage lies in the Smart Industry offloading or iPhone offloading chatbot to Vision Pro.
 
-![image-20231111121810492](C:\Users\victoryang00\AppData\Roaming\Typora\typora-user-images\image-20231111121810492.png)
+![image-20231111121810492](image-20231111121514782.png)
 
-![image-20231111121514780](C:\Users\victoryang00\AppData\Roaming\Typora\typora-user-images\image-20231111121514780.png)
+![image-20231111121514780](image-20231111121514780.png)
 
 WebAssembly (Wasm) is a binary instruction format designed as a low-level virtual machine that runs code at near-native speed. It is a platform-independent format initially created to enable high-performance applications in web browsers. However, its potential extends beyond the browser, allowing for its use in other environments, such as IoT devices, edge computing, and server-side applications. Wasm supports a variety of higher-level programming languages, including C, C++, Rust, and more. WebAssembly System Interface (WASI) is a standardized system interface for WebAssembly modules. WASI aims to provide a consistent and secure API for Wasm applications to access system resources, such as file systems, network sockets, and system clocks. By defining a standardized interface, WASI allows Wasm modules to be portable across different platforms and operating systems.
 
-![image-20231111114235155](C:\Users\victoryang00\AppData\Roaming\Typora\typora-user-images\image-20231111114235155.png)
+![image-20231111114235155](image-20231111114235155.png)
 
 We build our PoCs on the [wasm-micro-runtime(WAMR)](https://github.com/Multi-V-VM/wasm-micro-runtime/) project written in C++, where the CHECKPOINT_RESTORE with interpreter mode has already unstreamed, is an open-source WebAssembly (Wasm) runtime specifically designed for resource-constrained environments, such as IoT devices, edge computing, and embedded systems. This lightweight runtime enables developers to run WebAssembly applications efficiently and securely on various platforms with limited resources. The running model can be illustrated as below: In the wasm-micro-runtime (WAMR) project, there are different build configurations to enable various features and execution modes. The following options are related to the WebAssembly (Wasm) execution modes:
 
@@ -35,7 +35,7 @@ We build our PoCs on the [wasm-micro-runtime(WAMR)](https://github.com/Multi-V-V
 
 We focus on the AOT executions mode. The WebAssembly interpreter mode is easily implemented by snapshotting the C++ struct
 
-![image-20231111112653217](C:\Users\victoryang00\AppData\Roaming\Typora\typora-user-images\image-20231111112653217.png)
+![image-20231111112653217](image-20231111112653217.png)
 
 In this project, all of the state recovery is based on the WebAssembly View I need to finish the remaining part:
 
@@ -45,13 +45,13 @@ In this project, all of the state recovery is based on the WebAssembly View I ne
 
    2. Set the INT3+software implemented dwarf the instruction(self modifying code) on LLVM IR level, we think the stable point from the webassembly view lies in the LLVM label front and explicit stable mapping that adds memory fences which goes to one of our evaluation point how frequently should we insert the stable checkpoint point. like we need to insert explicit phi to mark the dataflow is not stale. The webassembly view assures every label start is stateless in the LLVM view, because the stack and heap are stored in another buffer so that everything is checkpointable at label start.
 
-   3. <img src="C:\Users\victoryang00\AppData\Roaming\Typora\typora-user-images\image-20231111122407332.png" alt="image-20231111122407332" style="zoom:25%;" />
+   3. <img src="image-20231111122407332.png" alt="image-20231111122407332" style="zoom:25%;" />
 
       
 
-      ![image-20231111112756349](C:\Users\victoryang00\AppData\Roaming\Typora\typora-user-images\image-20231111112756349.png)
+      ![image-20231111112756349](image-20231111112756349.png)
 
 2. Socket and Locks recovery:
    1. Normal record and replay style checkpoint and recovery
    2. For socket since we are using different machine for recovery, we couldn't just use socket reuse from linux, we will implement a gate way that  forward all the packets and can do rewriting for the packets source dest ip and can hijack everything to do the seamless migration of socket.
-   3. ![image-20231111130027962](C:\Users\victoryang00\AppData\Roaming\Typora\typora-user-images\image-20231111130027962.png)
+   3. ![image-20231111130027962](image-20231111130027962.png)
