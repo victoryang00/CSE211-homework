@@ -2,11 +2,11 @@ from skeleton import analyze_file
 
 # fill these in with the expected result for each test
 tests = {"0.py" : (False, False),
-         "1.py" : (False, False),
+         "1.py" : (True, False),
          "2.py" : (False, False),
-         "3.py" : (False, False),
+         "3.py" : (True, False),
          "4.py" : (False, False),
-         "5.py" : (False, False),
+         "5.py" : (True, False),
          "6.py" : (False, False),
          "7.py" : (False, False)
 }
