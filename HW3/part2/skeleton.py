@@ -94,6 +94,24 @@ def analyze_file(fname):
     # conflict or a read-write (rw) conflict
     ww_conflict = False
     rw_conflict = False
+    
+    cur_node = ast
+    for_nodes = []
+    # get for loop node
+    while True:
+        for_nodes.append(get_loop_constraints(cur_node))
+        if is_FOR_node(cur_node.body[0]):
+            cur_node = cur_node.body[0]
+        else:
+            break
+    # get loop read and write index node
+    for node in cur_node.body:
+        if is_FOR_node(node):
+            loop_var, lower_bound, upper_bound = get_loop_constraints(node)
+        elif is_WRITE_node(node):
+            writer_vars[node.args[0].id] = node.args[1].id
+        elif is_READ_node(node):
+            reader_vars[node.args[0].id] = node.args[1].id
 
     if smt_solver_rw.check() == z3.sat:
         print(smt_solver_rw.model())
