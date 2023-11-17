@@ -1,14 +1,14 @@
 from skeleton import analyze_file
 
 # fill these in with the expected result for each test
-tests = {"0.py" : (False, False),
-         "1.py" : (True, False),
-         "2.py" : (False, False),
-         "3.py" : (True, False),
-         "4.py" : (False, False),
+tests = {"0.py" : (True, True),
+         "1.py" : (False, False),
+         "2.py" : (True, True),
+         "3.py" : (False, False),
+         "4.py" : (True, True),
          "5.py" : (True, False),
-         "6.py" : (False, False),
-         "7.py" : (False, False)
+         "6.py" : (True, True),
+         "7.py" : (True, True)
 }
 
 passed = 0

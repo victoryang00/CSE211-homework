@@ -6,15 +6,15 @@ from typing import Tuple
 
 # Some example functions on how to use the python ast module:
 def pp_expr(node):
-    print("node: ", node)
+    # print("node: ", node)
     if is_NAME_node(node):
         return node.id
     if is_NUM_node(node):
         return str(node.n)
     if is_MULTIPLY_node(node):
-        return ("(", pp_expr(node.left), "*", pp_expr(node.right), ")")
+        return f"({pp_expr(node.left)}*{pp_expr(node.right)})"
     if is_ADDITION_node(node):
-        return ("(", pp_expr(node.left), "+", pp_expr(node.right), ")")
+        return f"({pp_expr(node.left)}+{pp_expr(node.right)})"
 
 
 # Given a python file, return an AST using the python ast module.
@@ -30,17 +30,17 @@ def get_ast_from_file(fname):
 # Example of how to get information for the ast FOR_node
 def get_loop_constraints(FOR_node) -> Tuple[str, str, str]:
     loop_var = FOR_node.target.id
-    print("loop_var: ", loop_var)
+    # print("loop_var: ", loop_var)
     lower_bound = pp_expr(FOR_node.iter.args[0])
     upper_bound = pp_expr(FOR_node.iter.args[1])
-    print(
-        "loop_var: ",
-        loop_var,
-        " lower_bound: ",
-        lower_bound,
-        " upper_bound: ",
-        upper_bound,
-    )
+    # print(
+    #     "loop_var: ",
+    #     loop_var,
+    #     " lower_bound: ",
+    #     lower_bound,
+    #     " upper_bound: ",
+    #     upper_bound,
+    # )
     # return the for loop information in some structure
     return (loop_var, lower_bound, upper_bound)
 
@@ -114,6 +114,7 @@ def analyze_file(fname):
         # print('sbb:'+str(expr.value.__class__))
         if is_SUBSCRIPT_node(expr):
             write_index = pp_expr(expr.targets[0].slice)
+            print("write_index: ", write_index)
         # if is_ASSIGN_node(expr):
         #     # print(expr.value)
             read_index = pp_expr(expr.value.slice)
@@ -132,20 +133,28 @@ def analyze_file(fname):
 
         if i == 0:
             smt_solver_rw.add(reader_vars != writer_vars)
-        looped_var = func[0]
         lower_bound = func[1]
         upper_bound = func[2]
-        # add constraints
-        # smt_solver_ww.add(z3.ForAll(
-        #     [z3.Int("r" + str(i)), z3.Int("w" + str(i))],
+        # add constraints Buggy
+        # smt_solver_rw.add(z3.ForAll(
+        #     [reader_var, writer_var],
         #     z3.Implies(
-        #         z3.And(z3.Int("r" + str(i)) >= int(lower_bound), z3.Int("r" + str(i)) <= int(upper_bound)),
+        #         z3.And(reader_var >= reader_vars.get(lower_bound, lower_bound),
+        #                reader_var < reader_vars.get(upper_bound, upper_bound)),
         #         z3.And(
-        #             z3.Int("w" + str(i)) >= int(lower_bound),
-        #             z3.Int("w" + str(i)) <= int(upper_bound),
-        #             z3.Not(z3.Int("r" + str(i)) == z3.Int("w" + str(i))),
+        #             writer_var >= writer_vars.get(lower_bound, lower_bound),
+        #             writer_var <= writer_vars.get(lower_bound, lower_bound),
+        #             z3.Not(reader_var == writer_var),
         #         ),
         #     ),
+        # ))
+        # smt_solver_ww.add(z3.ForAll(
+        #     [reader_var, writer_var],
+        #         z3.And(
+        #             writer_var >= writer_vars.get(lower_bound, lower_bound),
+        #             writer_var <= writer_vars.get(lower_bound, lower_bound),
+        #             z3.Not(reader_var == writer_var),
+        #         ),
         # ))
         smt_solver_rw.add(reader_var >= reader_vars.get(lower_bound, lower_bound))
         smt_solver_rw.add(reader_var < reader_vars.get(upper_bound, upper_bound))
@@ -153,9 +162,12 @@ def analyze_file(fname):
         smt_solver_rw.add(writer_var >= writer_vars.get(lower_bound, lower_bound))
         smt_solver_rw.add(writer_var < writer_vars.get(upper_bound, upper_bound))
 
+        smt_solver_ww.add(writer_var >= writer_vars.get(lower_bound, lower_bound))
+        smt_solver_ww.add(writer_var < writer_vars.get(upper_bound, upper_bound))
+
     for loop_var in variables:
         read_index = read_index.replace(
-            loop_var, f"reader_vars[\"{loop_var}]\""
+            loop_var, f"reader_vars[\"{loop_var}\"]"
         )  # latest reader
         write_index = write_index.replace(
             loop_var, f"writer_vars[\"{loop_var}\"]"
@@ -164,18 +176,21 @@ def analyze_file(fname):
     print(read_index + " == " + write_index)
     
     smt_solver_rw.add(eval(write_index + " == " + read_index ))
-
+    smt_solver_ww.add(eval(write_index + " == " + read_index ))
+    
+    # print(smt_solver_rw)
     if smt_solver_rw.check() == z3.sat:
-        print(smt_solver_rw.model())
-        rw_conflict = False
-    else:
+        # print(smt_solver_rw.model())
         rw_conflict = True
-
-    if smt_solver_ww.check() == z3.sat:
-        print(smt_solver_ww.model())
-        ww_conflict = False
     else:
+        rw_conflict = False
+
+    # print(smt_solver_ww)
+    if smt_solver_ww.check() == z3.sat:
+        # print(smt_solver_ww.model())
         ww_conflict = True
+    else:
+        ww_conflict = False
     print(ww_conflict, rw_conflict)
     return ww_conflict, rw_conflict
 
