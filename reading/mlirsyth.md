@@ -4,7 +4,7 @@
 1. **Motivation**:
    - Problem Statement
      - The current compilation phase for the heterogenous devices like CPU GPU or TPU is too divergence and not high performance because of the lack of semantic translation when lowering the IR. 
-     - ![image-20231112081221616](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-20231112081221616.png)
+     - ![image-20231112081221616](image-20231112081221616.png)
      - MLIR is an infrastructure for developing domain-specific compilers. To aid this, MLIR provides reusable building blocks, especially the abstraction of dialects with a bunch of operator that has knowledge of cross device memory communication and predifined  and shared tools that allow us to define domain-specific languages and their compilation pipelines.
    
    - SoTA
@@ -13,7 +13,7 @@
      - LLVM Polly can do backend compilation with very good performance insight for single machine.
      - Linalg IR(By the way Linear Algebra extensions has been accepted from the c++26 community that maps the header to this primitive IR) has the insight from the mathematical view to transform the `matmul` and `transpose` to be only one time transpose.(together with many other mathematical optimization) And has the best insight to clear away the linear algebra residual dead primitive.
    - Motivation
-   - ![image-20231112080422281](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-20231112080422281.png)
+   - ![image-20231112080422281](image-20231112080422281.png)
      - LLVM IR/Affine IR/Linalg IR are too heterogenous in different ways. Sa HLO is a better way of raising from C++ to ML DSLs that is super useful for TPUs. Taking from the uniformed IR to a divergent but idompediency interms of dataflow(especially IO) and semantic to easily codegen to different dialects are super useful for current development for compiler to TPU/GPU/CPU extensions.
      - For Raising and Lowering actually impossible to embed the same logic with no information loss. Say I'm writing the predefined functions for an application, For cross platform optimization in MLIR is good for memory transpolation and compliance to different target's view from data movement perspective. If you are lowering to XLA.
      - For the impossible dimensions for compatibility, debug inforamtion and performance insight,
@@ -23,7 +23,7 @@
    
 2. **Compiler Solution - The MLIRSynth Framework - A virtual Compilation Phase abstraction**:
 
-![image-20231112081336639](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-20231112081331731.png)
+![image-20231112081336639](image-20231112081331731.png)
 
 Heuristics: candidate set for getting the phi instruction out to match the set between target dialect and source dialect.
 Soundiness: CBMC Z3 for determinating the correctness statically.

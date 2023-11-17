@@ -16,9 +16,9 @@
    
        - Software abstraction of the kernel library for tensorized instructions that can be deployed on intel VNNI, ARM SVE, and NVIDIA Tensor Cores. Possibly for AMX now. Nowadays, they only have library compliance for tensorized instructions each time they upgrade the GPU/TPU/ASIC.
    
-       - ![Alt text](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-1.png)
+       - ![Alt text](image-1.png)
    2. **Compiler Solution - The UNIT Framework - A virtual ISA abstraction**:
-      ![Alt text](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-2.png)
+      ![Alt text](image-2.png)
    
       - Framework Overview
         - The authors propose a compiler framework called UNIT to unify the compilation for tensorized instructions.
@@ -33,22 +33,22 @@
         - The authors also propose the use of mixed sized data types to reduce the computational and memory burden. This approach is also widely adopted and is integrated within the UNIT framework.
    
    3. **Illustrative Example**:
-      ![Alt text](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-3.png)
-      ![Alt text](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-4.png)
+      ![Alt text](image-3.png)
+      ![Alt text](image-4.png)
       We first use the Arithmetic Isomorphism for a single thread using split/tile reorder and unroll.
-      ![Alt text](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-5.png)
+      ![Alt text](image-5.png)
       Then we have the Memory Isomorphism for intel VNNI, basically mark the loop invariant and lower to the other precision and other sized tensorized operations.
-      ![Alt text](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-6.png)
-      ![Alt text](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-7.png)
-      ![Alt text](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-8.png)
+      ![Alt text](image-6.png)
+      ![Alt text](image-7.png)
+      ![Alt text](image-8.png)
       Finally we do the transformation for Loop Recorganization for registers
-      ![Alt text](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-9.png)
+      ![Alt text](image-9.png)
    
    4. **Implementation and Key Results**:
    
       - The paper likely provides an implementation of the UNIT framework and evaluates its performance against traditional compilation processes. (Note: The actual implementation and evaluation details would be in the paper which wasn't accessible during the research.)
-        ![Alt text](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-10.png)
-        ![Alt text](https://asplos.dev/wordpress/wp-content/uploads/2023/11/image-11.png)
+        ![Alt text](image-10.png)
+        ![Alt text](image-11.png)
    
    5. **Discussion and Future Directions**:
    

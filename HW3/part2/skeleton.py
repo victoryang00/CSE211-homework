@@ -6,14 +6,15 @@ from typing import Tuple
 
 # Some example functions on how to use the python ast module:
 def pp_expr(node):
+    print("node: ", node)
+    if is_NAME_node(node):
+        return node.id
+    if is_NUM_node(node):
+        return str(node.n)
     if is_MULTIPLY_node(node):
         return ("(", pp_expr(node.left), "*", pp_expr(node.right), ")")
-    elif is_ADDITION_node(node):
+    if is_ADDITION_node(node):
         return ("(", pp_expr(node.left), "+", pp_expr(node.right), ")")
-    elif is_NAME_node(node):
-        return node.id
-    elif is_NUM_node(node):
-        return str(node.n)
 
 
 # Given a python file, return an AST using the python ast module.
@@ -29,6 +30,7 @@ def get_ast_from_file(fname):
 # Example of how to get information for the ast FOR_node
 def get_loop_constraints(FOR_node) -> Tuple[str, str, str]:
     loop_var = FOR_node.target.id
+    print("loop_var: ", loop_var)
     lower_bound = pp_expr(FOR_node.iter.args[0])
     upper_bound = pp_expr(FOR_node.iter.args[1])
     print(
@@ -45,32 +47,30 @@ def get_loop_constraints(FOR_node) -> Tuple[str, str, str]:
 
 # Check if an ast node is a for loop
 def is_FOR_node(node):
-    return str(node.__class__) == "<class '_ast.For'>"
+    return str(node.__class__) == "<class 'ast.For'>"
 
 
 def is_NAME_node(node):
-    return str(node.__class__) == "<class '_ast.Name'>"
+    return str(node.__class__) == "<class 'ast.Name'>"
 
 
 def is_NUM_node(node):
-    return str(node.__class__) == "<class '_ast.Constant'>"
+    return str(node.__class__) == "<class 'ast.Constant'>"
 
 
 def is_MULTIPLY_node(node):
-    return str(node.op.__class__) == "<class '_ast.Mult'>"
+    return str(node.op.__class__) == "<class 'ast.Mult'>"
 
 
 def is_ADDITION_node(node):
-    return str(node.op.__class__) == "<class '_ast.Add'>"
+    return str(node.op.__class__) == "<class 'ast.Add'>"
 
 
-def is_READ_node(node):
-    return node.value.func.id == "read_index"
+def is_SUBSCRIPT_node(node):  # RHS
+    return str(node.value.__class__) == "<class 'ast.Subscript'>"
 
-
-def is_WRITE_node(node):
-    return node.value.func.id == "write_index"
-
+def is_ASSIGN_node(node):  # RHS
+    return str(node.value.__class__) == "<class 'ast.Assign'>"
 
 # Top level function. Given a python file name, it parses the file,
 # and analyzes it to determine if the top level for loop can be done
@@ -94,24 +94,76 @@ def analyze_file(fname):
     # conflict or a read-write (rw) conflict
     ww_conflict = False
     rw_conflict = False
-    
+
     cur_node = ast
     for_nodes = []
+    read_index, write_index = "", ""
+
     # get for loop node
-    while True:
+    while cur_node:
         for_nodes.append(get_loop_constraints(cur_node))
+        # Check if the first element in the body is a FOR node
         if is_FOR_node(cur_node.body[0]):
             cur_node = cur_node.body[0]
         else:
             break
-    # get loop read and write index node
-    for node in cur_node.body:
-        if is_FOR_node(node):
-            loop_var, lower_bound, upper_bound = get_loop_constraints(node)
-        elif is_WRITE_node(node):
-            writer_vars[node.args[0].id] = node.args[1].id
-        elif is_READ_node(node):
-            reader_vars[node.args[0].id] = node.args[1].id
+        
+    print(len(cur_node.body),for_nodes)
+    # get outermost for loop
+    for expr in cur_node.body:
+        # print('sbb:'+str(expr.value.__class__))
+        if is_SUBSCRIPT_node(expr):
+            write_index = pp_expr(expr.targets[0].slice)
+        # if is_ASSIGN_node(expr):
+        #     # print(expr.value)
+            read_index = pp_expr(expr.value.slice)
+            # write_index = pp_expr(expr.value.args[2])
+            # print("read_index: ", read_index)
+            # print("write_index: ", write_index)
+            
+    for i, func in enumerate(for_nodes):
+        variables.append(func[0])
+        # variables.append("r" + str(i))
+        # variables.append("w" + str(i))
+        reader_var = z3.Int("r_" + str(i))
+        writer_var = z3.Int("w_" + str(i))
+        reader_vars[func[0]] = reader_var
+        writer_vars[func[0]] = writer_var
+
+        if i == 0:
+            smt_solver_rw.add(reader_vars != writer_vars)
+        looped_var = func[0]
+        lower_bound = func[1]
+        upper_bound = func[2]
+        # add constraints
+        # smt_solver_ww.add(z3.ForAll(
+        #     [z3.Int("r" + str(i)), z3.Int("w" + str(i))],
+        #     z3.Implies(
+        #         z3.And(z3.Int("r" + str(i)) >= int(lower_bound), z3.Int("r" + str(i)) <= int(upper_bound)),
+        #         z3.And(
+        #             z3.Int("w" + str(i)) >= int(lower_bound),
+        #             z3.Int("w" + str(i)) <= int(upper_bound),
+        #             z3.Not(z3.Int("r" + str(i)) == z3.Int("w" + str(i))),
+        #         ),
+        #     ),
+        # ))
+        smt_solver_rw.add(reader_var >= reader_vars.get(lower_bound, lower_bound))
+        smt_solver_rw.add(reader_var < reader_vars.get(upper_bound, upper_bound))
+
+        smt_solver_rw.add(writer_var >= writer_vars.get(lower_bound, lower_bound))
+        smt_solver_rw.add(writer_var < writer_vars.get(upper_bound, upper_bound))
+
+    for loop_var in variables:
+        read_index = read_index.replace(
+            loop_var, f"reader_vars[\"{loop_var}]\""
+        )  # latest reader
+        write_index = write_index.replace(
+            loop_var, f"writer_vars[\"{loop_var}\"]"
+        )  # latest writer
+    # THis node's assignment
+    print(read_index + " == " + write_index)
+    
+    smt_solver_rw.add(eval(write_index + " == " + read_index ))
 
     if smt_solver_rw.check() == z3.sat:
         print(smt_solver_rw.model())
@@ -124,8 +176,8 @@ def analyze_file(fname):
         ww_conflict = False
     else:
         ww_conflict = True
-
-    return ww_conflict, False
+    print(ww_conflict, rw_conflict)
+    return ww_conflict, rw_conflict
 
 
 if __name__ == "__main__":
