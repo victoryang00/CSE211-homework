@@ -12,10 +12,10 @@ using namespace std::chrono;
 
 """
 
+
 # The reference function creates a loop that simply adds together all
 # floating point constants in a loop
 def reference_loop_source(chain_length):
-
     # function header
     function = "void reference_loop(float *b, int size) {"
 
@@ -27,8 +27,8 @@ def reference_loop_source(chain_length):
 
     # create the dependency chain
     chain = []
-    for i in range(0,chain_length):
-        chain.append("    tmp += "+ str(i+1)+".0f;")
+    for i in range(0, chain_length):
+        chain.append("    tmp += " + str(i + 1) + ".0f;")
 
     # store the final value to memory
     close = "    b[i] = tmp;"
@@ -40,7 +40,10 @@ def reference_loop_source(chain_length):
     function_close = "}"
 
     # join together all the parts to make a complete function
-    return "\n".join([function, loop, init, "\n".join(chain), close, loop_close, function_close])
+    return "\n".join(
+        [function, loop, init, "\n".join(chain), close, loop_close, function_close]
+    )
+
 
 # First hoomework function here! Implement the reference loop unrolled
 # *sequentially*, That is, create dependency chains of length
@@ -58,29 +61,47 @@ def reference_loop_source(chain_length):
 # Don't forget! Floating point constants must have 'f' after them!
 # that is, you would write 2 in floating point as '2.0f'
 
+
 # You can gain confidence that implemented this correctly by executing
 # with several power-of-two options for the unroll factor for example,
 # try 1,2,4,8, etc.
 def homework_loop_sequential_source(chain_length, unroll_factor):
-    function = "void homework_loop_sequential(float *b, int size) {"
-    #implement me!
-    function_body = ""
-    function_close = "}"
-    return "\n".join([function, function_body, function_close])
+    body = "\ntmp = b[i];\n"
+    body += "".join(f"tmp += {i+1}.0f;\n" for i in range(chain_length))
+    body += "b[i]=tmp;\ni++;\n"
+    body = body.replace("\n", "\n\t\t\t")
+
+    return f"""void homework_loop_sequential(float *b, int size) {{
+    float tmp;
+    for (int i = 0; i < size; ) {{
+{body * unroll_factor}
+    }}
+}}"""
+
 
 # Second homework function here! The specification for this
 # function is the same as the first homework function, except
 # this time you will interleave the instructions of the unrolled
 # dependency chains.
 
+
 # You can assume the unroll factor is a power of 2 and that the
-# the dependency chain also a power of two. 
+# the dependency chain also a power of two.
 def homework_loop_interleaved_source(chain_length, unroll_factor):
-    function = "void homework_loop_interleaved(float *b, int size) {"
-    #implement me!
-    function_body = ""    
-    function_close = "}"
-    return "\n".join([function, function_body, function_close])
+    body = "\n"
+    body += "".join(f"float tmp{j} = b[i + {j}];\n" for j in range(unroll_factor))
+    for i in range(chain_length):
+        body += "".join(f"tmp{j} += {i+1}.0f;\n" for j in range(unroll_factor))
+    body += "".join(f"b[i + {j}] = tmp{j};\n" for j in range(unroll_factor))
+
+    body = body.replace("\n", "\n\t\t\t")
+
+    return f"""void homework_loop_interleaved(float *b, int size) {{
+    for (int i = 0; i < size; i += {unroll_factor}) {{
+{body}
+    }}
+}}"""
+
 
 # String for the main function
 main_source_string = """
@@ -143,22 +164,37 @@ params_str = """
 #define CHAIN_LENGTH {}
 #define UNROLL_FACTOR {}"""
 
+
 # Create the program source code
 def pp_program(chain_length, unroll_factor):
-
     # Your two functions are called here
-    homework_source_string_sequential = homework_loop_sequential_source(chain_length, unroll_factor)
-    homework_source_string_interleaved = homework_loop_interleaved_source(chain_length, unroll_factor)
+    homework_source_string_sequential = homework_loop_sequential_source(
+        chain_length, unroll_factor
+    )
+    homework_source_string_interleaved = homework_loop_interleaved_source(
+        chain_length, unroll_factor
+    )
 
     # join together all the other parts to make a complete C++ program
-    formatted_params = params_str.format(chain_length, unroll_factor);
-    return "\n".join([top_source_string, reference_loop_source(chain_length), homework_source_string_sequential, homework_source_string_interleaved, formatted_params, main_source_string])
+    formatted_params = params_str.format(chain_length, unroll_factor)
+    return "\n".join(
+        [
+            top_source_string,
+            reference_loop_source(chain_length),
+            homework_source_string_sequential,
+            homework_source_string_interleaved,
+            formatted_params,
+            main_source_string,
+        ]
+    )
+
 
 # Write a string to a file (helper function)
 def write_str_to_file(st, fname):
-    f = open(fname, 'w')
+    f = open(fname, "w")
     f.write(st)
     f.close()
+
 
 # Compile the program. Don't change the options here for the official
 # assignment submission. Feel free to change them for your own curiosity.
@@ -171,18 +207,20 @@ def write_str_to_file(st, fname):
 #
 # I am using the lowest optimization level here (-O0) to disable most
 # optimizations. The compiler does some really ticky things even at
-# (-O1) here. 
+# (-O1) here.
 def compile_program():
     cmd = "clang++ -std=c++14 -fno-unroll-loops -O0 -o homework homework.cpp"
     print("running: " + cmd)
-    assert(os.system(cmd) == 0)
+    assert os.system(cmd) == 0
+
 
 # Execute the program
 def run_program():
     cmd = "./homework"
     print("running: " + cmd)
     print("")
-    assert(os.system(cmd) == 0)
+    assert os.system(cmd) == 0
+
 
 # The high-level function: generate the C code, compile it, and execute it.
 def generate_and_run(chain_length, unroll_factor):
@@ -193,23 +231,35 @@ def generate_and_run(chain_length, unroll_factor):
     print("unroll factor = " + str(unroll_factor))
     print("-----")
     print("")
-    
+
     program_str = pp_program(chain_length, unroll_factor)
     write_str_to_file(program_str, "homework.cpp")
     compile_program()
     run_program()
 
+
 # gets two command line args, chain length (CL) and unroll factor (UF)
 def main():
-    parser = argparse.ArgumentParser(description='Part 1 of Homework 1: exploiting ILP by unrolling independent loops.')
-    parser.add_argument('chain_length', metavar='CL', type=int,
-                   help='the length of dependent instructions per loop iteration to generate')
-    parser.add_argument('unroll_factor', metavar='UF', type=int,
-                   help='how many loop iterations to unroll')
+    parser = argparse.ArgumentParser(
+        description="Part 1 of Homework 1: exploiting ILP by unrolling independent loops."
+    )
+    parser.add_argument(
+        "chain_length",
+        metavar="CL",
+        type=int,
+        help="the length of dependent instructions per loop iteration to generate",
+    )
+    parser.add_argument(
+        "unroll_factor",
+        metavar="UF",
+        type=int,
+        help="how many loop iterations to unroll",
+    )
     args = parser.parse_args()
     CL = args.chain_length
     UF = args.unroll_factor
     generate_and_run(CL, UF)
+
 
 if __name__ == "__main__":
     main()

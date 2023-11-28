@@ -35,7 +35,7 @@ def reference_reduction_source():
 
 # Your homework will largely take place here. Create a loop that
 # is semantically equivalent to the reference loop. That is, it computes
-# a[0] = a[0] + a[1] + a[2] + a[3] + a[4] ... + a[size]
+# a[0] = a[0] + a[1] + a[2] + a[3] + a[4] ... + a[size] <--- SUPER EMBARASSING OFF BY ONE ERROR FROM WHOEVER WROTE THIS COMMENT
 #
 # where size is passed in by the main source string.
 # You should unroll by the unroll factor. 
@@ -47,15 +47,23 @@ def reference_reduction_source():
 # several power-of-2 unroll factors, e.g. 2,4,8,16. You can assume
 # partition is less than size.
 def homework_reduction_source(partitions):
-    # header
-    function = "void homework_reduction(reduce_type *a, int size) {"
+    header = "".join(f"\nint p{i} = {i} * size / {partitions};" for i in range(partitions))
+    header = header.replace("\n", "\n\t") + "\n"
 
-    # implement me!
-    function_body = ""
+    body = "".join(f"\na[p{i}] += a[p{i} + i];" for i in range(partitions))
+    body = body.replace("\n", "\n\t\t\t") + "\n"
 
-    # closing brace
-    function_close = "}"
-    return "\n".join([function, function_body,function_close])
+    footer = "".join(f"\na[0] += a[p{i}];" for i in range(1, partitions))
+    footer = footer.replace("\n", "\n\t") + "\n"
+
+    return f"""void homework_reduction(reduce_type *a, int size) {{
+{header}
+    int iters = size / {partitions};
+    for (int i = 1; i < iters; i++) {{
+{body}
+    }}
+{footer}
+}}"""
 
 # String for the main function, including timings and
 # reference checks.
