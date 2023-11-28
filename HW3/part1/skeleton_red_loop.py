@@ -14,16 +14,16 @@ typedef double reduce_type;
 
 """
 
+
 # The reference loop simply adds together all elements in the array
 def reference_reduction_source():
-
     # function header
     function = "void reference_reduction(reduce_type *b, int size) {"
 
     # loop header
     loop = "  for (int i = 1; i < size; i++) {"
 
-    #simple reduction equation
+    # simple reduction equation
     eq = "    b[0] += b[i];"
 
     # closing braces
@@ -33,12 +33,13 @@ def reference_reduction_source():
     # joining together all parts
     return "\n".join([function, loop, eq, loop_close, function_close])
 
+
 # Your homework will largely take place here. Create a loop that
 # is semantically equivalent to the reference loop. That is, it computes
 # a[0] = a[0] + a[1] + a[2] + a[3] + a[4] ... + a[size] <--- SUPER EMBARASSING OFF BY ONE ERROR FROM WHOEVER WROTE THIS COMMENT
 #
 # where size is passed in by the main source string.
-# You should unroll by the unroll factor. 
+# You should unroll by the unroll factor.
 #
 # You can assume the size and the number of partitions will be
 # a power of 2, which should make the partitioning logic simpler.
@@ -47,23 +48,27 @@ def reference_reduction_source():
 # several power-of-2 unroll factors, e.g. 2,4,8,16. You can assume
 # partition is less than size.
 def homework_reduction_source(partitions):
-    header = "".join(f"\nint p{i} = {i} * size / {partitions};" for i in range(partitions))
+    header = f"\nsize_t partition_size = (size_t) size / {partitions};\n"
+    header += "".join(
+        f"\nsize_t p{i} = {i} * partition_size;\nreduce_type p{i}_acc = a[p{i}];"
+        for i in range(partitions)
+    )
     header = header.replace("\n", "\n\t") + "\n"
 
-    body = "".join(f"\na[p{i}] += a[p{i} + i];" for i in range(partitions))
+    body = "".join(f"\np{i}_acc += a[p{i} + i];" for i in range(partitions))
     body = body.replace("\n", "\n\t\t\t") + "\n"
 
-    footer = "".join(f"\na[0] += a[p{i}];" for i in range(1, partitions))
-    footer = footer.replace("\n", "\n\t") + "\n"
+    footer = f"\ta[0] = {' + '.join(f'p{i}_acc' for i in range(partitions))};\n"
 
     return f"""void homework_reduction(reduce_type *a, int size) {{
 {header}
-    int iters = size / {partitions};
+    size_t iters = size / {partitions};
     for (int i = 1; i < iters; i++) {{
 {body}
     }}
 {footer}
 }}"""
+
 
 # String for the main function, including timings and
 # reference checks.
@@ -109,20 +114,30 @@ int main() {
 
 params_str = "#define UNROLL_FACTOR {}"
 
+
 # Create the program source code
 def pp_program(partitions):
-
     # Your function is called here
     homework_string = homework_reduction_source(partitions)
 
     # View your homework source string here for debugging
-    return "\n".join([top_source_string, reference_reduction_source(), homework_string, params_str.format(partitions), main_source_string])
+    return "\n".join(
+        [
+            top_source_string,
+            reference_reduction_source(),
+            homework_string,
+            params_str.format(partitions),
+            main_source_string,
+        ]
+    )
+
 
 # Write a string to a file (helper function)
 def write_str_to_file(st, fname):
-    f = open(fname, 'w')
+    f = open(fname, "w")
     f.write(st)
     f.close()
+
 
 # Compile the program. Don't change the options here for the official
 # assignment report. Feel free to change them for your own curiosity.
@@ -138,14 +153,16 @@ def write_str_to_file(st, fname):
 def compile_program():
     cmd = "clang++ -std=c++17 -fno-unroll-loops -O3 -o homework homework.cpp"
     print("running: " + cmd)
-    assert(os.system(cmd) == 0)
+    assert os.system(cmd) == 0
+
 
 # Run the program
 def run_program():
     cmd = "./homework"
     print("running: " + cmd)
     print("")
-    assert(os.system(cmd) == 0)
+    assert os.system(cmd) == 0
+
 
 # This is the top level program function. Generate the C++ program,
 # compile it, and run it.
@@ -169,14 +186,22 @@ def generate_and_run(partitions):
     # run the program
     run_program()
 
+
 # gets one command line arg unroll factor (UF)
 def main():
-    parser = argparse.ArgumentParser(description='Part 2 of Homework 1: exploiting ILP by unrolling reduction loop iterations.')
-    parser.add_argument('unroll_factor', metavar='UF', type=int,
-                   help='how many loop iterations to unroll')
+    parser = argparse.ArgumentParser(
+        description="Part 2 of Homework 1: exploiting ILP by unrolling reduction loop iterations."
+    )
+    parser.add_argument(
+        "unroll_factor",
+        metavar="UF",
+        type=int,
+        help="how many loop iterations to unroll",
+    )
     args = parser.parse_args()
     UF = args.unroll_factor
     generate_and_run(UF)
+
 
 if __name__ == "__main__":
     main()
