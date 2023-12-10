@@ -1,0 +1,944 @@
+      for k.0 (0,24)
+        for ax0@ax1@.0.0 (0,2)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,3)
+              b.shared = ...
+        for ax0@ax1@.0.0 (0,32)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,8)
+          for j_c.3 (0,3)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                for j_c.4 (0,2)
+                  compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 966 GFLOPS: 3385.36 / 3711.20       results: MeasureResult(cost:[0.0001,0.0002,0.0002], error_no:0, all_cost:1.74, Tstamp:1702081212.52)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 512
+      for k.0 (0,96)
+        for ax0@ax1@.0.0 (0,2)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,2)
+          for j_c.3 (0,3)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                for j_c.4 (0,2)
+                  compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 967 GFLOPS: 0.00 / 3711.20  results: MeasureResult(error_type:CompileHostError, error_msg:Traceback (most recent call last):
+  File "/Users/victoryang00/miniforge3/envs/tvm-m1/lib/python3.10/site-packages/tvm-0.15.dev78+g1994f402e6-py3.10-macosx-11.0-arm64.egg/tvm/auto_scheduler/measure.py", line 633, in _local_build_worker
+    func = build_mod
+...
+nternalError: Traceback (most recent call last):
+  File "/Users/victoryang00/CLionProjects/CSE211-homework/HW4/tvm/src/tir/transforms/storage_rewrite.cc", line 1466
+InternalError: Check failed: (me->coeff == 0 || info.factor() % me->coeff == 0) is false: 
+, all_cost:0.21, Tstamp:1702081212.54)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 512
+      for k.0 (0,48)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,3)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,4)
+          for j_c.3 (0,3)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                for j_c.4 (0,2)
+                  compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 968 GFLOPS: 3135.20 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.82, Tstamp:1702081214.24)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 16
+      for k.0 (0,48)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,4)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,2)
+              a.shared = ...
+        for k.1 (0,4)
+          for j_c.3 (0,3)
+            for k.2 (0,4)
+              for i_c.4 (0,4)
+                compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,3)
+          compute = ...
+
+==================================================
+No: 969 GFLOPS: 3058.45 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:2.38, Tstamp:1702081216.47)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,48)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,3)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,4)
+          for j_c.3 (0,2)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                for j_c.4 (0,3)
+                  compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 970 GFLOPS: 2765.31 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:2.00, Tstamp:1702081218.34)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,48)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,3)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for j_c.3 (0,6)
+          for k.2 (0,16)
+            for i_c.4 (0,2)
+              compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 971 GFLOPS: 0.00 / 3711.20  results: MeasureResult(error_type:CompileHostError, error_msg:Traceback (most recent call last):
+  File "/Users/victoryang00/miniforge3/envs/tvm-m1/lib/python3.10/site-packages/tvm-0.15.dev78+g1994f402e6-py3.10-macosx-11.0-arm64.egg/tvm/auto_scheduler/measure.py", line 633, in _local_build_worker
+    func = build_mod
+...
+nternalError: Traceback (most recent call last):
+  File "/Users/victoryang00/CLionProjects/CSE211-homework/HW4/tvm/src/tir/transforms/storage_rewrite.cc", line 1466
+InternalError: Check failed: (me->coeff == 0 || info.factor() % me->coeff == 0) is false: 
+, all_cost:0.08, Tstamp:1702081218.36)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  threadIdx.x i.2@j.2@ (0,128)
+    compute.local auto_unroll: 16
+    for k.0 (0,24)
+      for ax0@ax1@.0.0 (0,3)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,2)
+            b.shared = ...
+      for ax0@ax1@.0.0 (0,32)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          a.shared = ...
+      for k.1 (0,8)
+        for i_c.3 (0,2)
+          for j_c.3 (0,3)
+            for k.2 (0,4)
+              for i_c.4 (0,4)
+                compute.local = ...
+    for i.3 (0,8)
+      for j.3 (0,3)
+        compute = ...
+
+==================================================
+No: 972 GFLOPS: 2613.63 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.88, Tstamp:1702081220.06)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,96)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,4)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,2)
+          for i_c.3 (0,2)
+            for j_c.3 (0,3)
+              for k.2 (0,4)
+                for i_c.4 (0,2)
+                  compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,3)
+          compute = ...
+
+==================================================
+No: 973 GFLOPS: 2980.87 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.81, Tstamp:1702081221.76)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  threadIdx.x i.2@j.2@ (0,128)
+    compute.local auto_unroll: 16
+    for k.0 (0,96)
+      for ax0@ax1@.0.0 (0,2)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          b.shared = ...
+      for ax0@ax1@.0.0 (0,2)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,4)
+            a.shared = ...
+      for k.1 (0,2)
+        for i_c.3 (0,2)
+          for j_c.3 (0,3)
+            for k.2 (0,4)
+              for i_c.4 (0,4)
+                compute.local = ...
+    for i.3 (0,8)
+      for j.3 (0,3)
+        compute = ...
+
+==================================================
+No: 974 GFLOPS: 2986.91 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.85, Tstamp:1702081223.49)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  threadIdx.x i.2@j.2@ (0,128)
+    compute.local auto_unroll: 16
+    for k.0 (0,48)
+      threadIdx.x ax0@ax1@.0.1 (0,128)
+        vectorize ax0@ax1@.1 (0,4)
+          b.shared = ...
+      for ax0@ax1@.0.0 (0,16)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          a.shared = ...
+      for k.1 (0,4)
+        for i_c.3 (0,2)
+          for j_c.3 (0,6)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                compute.local = ...
+    for i.3 (0,4)
+      for j.3 (0,6)
+        compute = ...
+
+==================================================
+No: 975 GFLOPS: 0.00 / 3711.20  results: MeasureResult(error_type:CompileHostError, error_msg:Traceback (most recent call last):
+  File "/Users/victoryang00/miniforge3/envs/tvm-m1/lib/python3.10/site-packages/tvm-0.15.dev78+g1994f402e6-py3.10-macosx-11.0-arm64.egg/tvm/auto_scheduler/measure.py", line 633, in _local_build_worker
+    func = build_mod
+...
+nternalError: Traceback (most recent call last):
+  File "/Users/victoryang00/CLionProjects/CSE211-homework/HW4/tvm/src/tir/transforms/storage_rewrite.cc", line 1466
+InternalError: Check failed: (me->coeff == 0 || info.factor() % me->coeff == 0) is false: 
+, all_cost:0.07, Tstamp:1702081223.51)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 16
+      for k.0 (0,48)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,4)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,2)
+              a.shared = ...
+        for k.1 (0,4)
+          for j_c.3 (0,6)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 976 GFLOPS: 3097.54 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.92, Tstamp:1702081225.28)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,48)
+        for ax0@ax1@.0.0 (0,3)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,4)
+          for j_c.3 (0,2)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                for j_c.4 (0,3)
+                  compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 977 GFLOPS: 3209.82 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.90, Tstamp:1702081227.04)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,48)
+        for ax0@ax1@.0.0 (0,3)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for j_c.3 (0,6)
+          for k.2 (0,16)
+            for i_c.4 (0,2)
+              compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 978 GFLOPS: 0.00 / 3711.20  results: MeasureResult(error_type:CompileHostError, error_msg:Traceback (most recent call last):
+  File "/Users/victoryang00/miniforge3/envs/tvm-m1/lib/python3.10/site-packages/tvm-0.15.dev78+g1994f402e6-py3.10-macosx-11.0-arm64.egg/tvm/auto_scheduler/measure.py", line 633, in _local_build_worker
+    func = build_mod
+...
+nternalError: Traceback (most recent call last):
+  File "/Users/victoryang00/CLionProjects/CSE211-homework/HW4/tvm/src/tir/transforms/storage_rewrite.cc", line 1466
+InternalError: Check failed: (me->coeff == 0 || info.factor() % me->coeff == 0) is false: 
+, all_cost:0.08, Tstamp:1702081227.06)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 512
+      for k.0 (0,96)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,3)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,2)
+          for j_c.3 (0,3)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                for j_c.4 (0,2)
+                  compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 979 GFLOPS: 0.00 / 3711.20  results: MeasureResult(error_type:CompileHostError, error_msg:Traceback (most recent call last):
+  File "/Users/victoryang00/miniforge3/envs/tvm-m1/lib/python3.10/site-packages/tvm-0.15.dev78+g1994f402e6-py3.10-macosx-11.0-arm64.egg/tvm/auto_scheduler/measure.py", line 633, in _local_build_worker
+    func = build_mod
+...
+nternalError: Traceback (most recent call last):
+  File "/Users/victoryang00/CLionProjects/CSE211-homework/HW4/tvm/src/tir/transforms/storage_rewrite.cc", line 1466
+InternalError: Check failed: (me->coeff == 0 || info.factor() % me->coeff == 0) is false: 
+, all_cost:0.06, Tstamp:1702081227.06)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,96)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,3)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,4)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,2)
+              a.shared = ...
+        for j_c.3 (0,6)
+          for k.2 (0,8)
+            for i_c.4 (0,2)
+              compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 980 GFLOPS: 0.00 / 3711.20  results: MeasureResult(error_type:CompileHostError, error_msg:Traceback (most recent call last):
+  File "/Users/victoryang00/miniforge3/envs/tvm-m1/lib/python3.10/site-packages/tvm-0.15.dev78+g1994f402e6-py3.10-macosx-11.0-arm64.egg/tvm/auto_scheduler/measure.py", line 633, in _local_build_worker
+    func = build_mod
+...
+nternalError: Traceback (most recent call last):
+  File "/Users/victoryang00/CLionProjects/CSE211-homework/HW4/tvm/src/tir/transforms/storage_rewrite.cc", line 1466
+InternalError: Check failed: (me->coeff == 0 || info.factor() % me->coeff == 0) is false: 
+, all_cost:0.05, Tstamp:1702081227.06)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,96)
+        for ax0@ax1@.0.0 (0,2)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,4)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,2)
+              a.shared = ...
+        for j_c.3 (0,6)
+          for k.2 (0,8)
+            for i_c.4 (0,2)
+              compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 981 GFLOPS: 2945.81 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.87, Tstamp:1702081228.78)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 1024
+      for k.0 (0,96)
+        for ax0@ax1@.0.0 (0,2)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,4)
+          for j_c.3 (0,2)
+            for k.2 (0,2)
+              for i_c.4 (0,2)
+                for j_c.4 (0,3)
+                  compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 982 GFLOPS: 2972.86 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:2.24, Tstamp:1702081230.91)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,16)
+        for ax0@ax1@.0.0 (0,3)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,3)
+              b.shared = ...
+        for ax0@ax1@.0.0 (0,48)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,12)
+          for j_c.3 (0,3)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                for j_c.4 (0,2)
+                  compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 983 GFLOPS: 0.00 / 3711.20  results: MeasureResult(error_type:CompileHostError, error_msg:Traceback (most recent call last):
+  File "/Users/victoryang00/miniforge3/envs/tvm-m1/lib/python3.10/site-packages/tvm-0.15.dev78+g1994f402e6-py3.10-macosx-11.0-arm64.egg/tvm/auto_scheduler/measure.py", line 633, in _local_build_worker
+    func = build_mod
+...
+nternalError: Traceback (most recent call last):
+  File "/Users/victoryang00/CLionProjects/CSE211-homework/HW4/tvm/src/tir/transforms/storage_rewrite.cc", line 1466
+InternalError: Check failed: (me->coeff == 0 || info.factor() % me->coeff == 0) is false: 
+, all_cost:0.10, Tstamp:1702081230.93)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 1024
+      for k.0 (0,96)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,2)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,2)
+          for j_c.3 (0,6)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 984 GFLOPS: 3297.15 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.83, Tstamp:1702081232.69)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  threadIdx.x i.2@j.2@ (0,128)
+    compute.local auto_unroll: 16
+    for k.0 (0,24)
+      for ax0@ax1@.0.0 (0,6)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          b.shared = ...
+      for ax0@ax1@.0.0 (0,32)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          a.shared = ...
+      for k.1 (0,8)
+        for i_c.3 (0,2)
+          for j_c.3 (0,3)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                for j_c.4 (0,2)
+                  compute.local = ...
+    for i.3 (0,4)
+      for j.3 (0,6)
+        compute = ...
+
+==================================================
+No: 985 GFLOPS: 3118.66 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.81, Tstamp:1702081234.41)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,24)
+        for ax0@ax1@.0.0 (0,6)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,32)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,16)
+          for i_c.3 (0,2)
+            for j_c.3 (0,6)
+              for k.2 (0,2)
+                compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 986 GFLOPS: 3035.15 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.82, Tstamp:1702081236.15)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  threadIdx.x i.2@j.2@ (0,128)
+    compute.local auto_unroll: 16
+    for k.0 (0,48)
+      for ax0@ax1@.0.0 (0,3)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          b.shared = ...
+      for ax0@ax1@.0.0 (0,16)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          a.shared = ...
+      for k.1 (0,4)
+        for i_c.3 (0,2)
+          for j_c.3 (0,3)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                for j_c.4 (0,2)
+                  compute.local = ...
+    for i.3 (0,4)
+      for j.3 (0,6)
+        compute = ...
+
+==================================================
+No: 987 GFLOPS: 2220.59 / 3711.20       results: MeasureResult(cost:[0.0003,0.0003,0.0003], error_no:0, all_cost:1.88, Tstamp:1702081237.93)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,96)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,4)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,2)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,4)
+              a.shared = ...
+        for k.1 (0,2)
+          for i_c.3 (0,2)
+            for j_c.3 (0,3)
+              for k.2 (0,4)
+                for i_c.4 (0,2)
+                  compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,3)
+          compute = ...
+
+==================================================
+No: 988 GFLOPS: 3045.42 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.84, Tstamp:1702081239.66)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 1024
+      for k.0 (0,96)
+        for ax0@ax1@.0.0 (0,2)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,4)
+          for j_c.3 (0,6)
+            for k.2 (0,2)
+              for i_c.4 (0,2)
+                compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 989 GFLOPS: 2503.37 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.74, Tstamp:1702081241.33)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,48)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,3)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for j_c.3 (0,3)
+          for k.2 (0,16)
+            for i_c.4 (0,4)
+              compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,3)
+          compute = ...
+
+==================================================
+No: 990 GFLOPS: 2743.92 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.88, Tstamp:1702081243.12)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,24)
+        for ax0@ax1@.0.0 (0,3)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,2)
+              b.shared = ...
+        for ax0@ax1@.0.0 (0,32)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,16)
+          for j_c.3 (0,6)
+            for k.2 (0,2)
+              for i_c.4 (0,2)
+                compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 991 GFLOPS: 3052.42 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.82, Tstamp:1702081244.85)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,96)
+        for ax0@ax1@.0.0 (0,2)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for j_c.3 (0,3)
+          for k.2 (0,8)
+            for i_c.4 (0,4)
+              compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,3)
+          compute = ...
+
+==================================================
+No: 992 GFLOPS: 2814.44 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.85, Tstamp:1702081246.64)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,96)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,4)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,4)
+          for i_c.3 (0,2)
+            for j_c.3 (0,3)
+              for k.2 (0,2)
+                for i_c.4 (0,2)
+                  compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,3)
+          compute = ...
+
+.......E.
+*******==================================================
+No: 993 GFLOPS: 3054.07 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:2.23, Tstamp:1702081250.65)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 16
+      for k.0 (0,16)
+        for ax0@ax1@.0.0 (0,3)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,3)
+              b.shared = ...
+        for ax0@ax1@.0.0 (0,12)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,4)
+              a.shared = ...
+        for k.1 (0,12)
+          for j_c.3 (0,3)
+            for k.2 (0,4)
+              for i_c.4 (0,2)
+                for j_c.4 (0,2)
+                  compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 994 GFLOPS: 3257.68 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.78, Tstamp:1702081252.39)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  threadIdx.x i.2@j.2@ (0,128)
+    compute.local auto_unroll: 16
+    for k.0 (0,24)
+      for ax0@ax1@.0.0 (0,3)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,2)
+            b.shared = ...
+      for ax0@ax1@.0.0 (0,32)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          a.shared = ...
+      for k.1 (0,8)
+        for j_c.3 (0,3)
+          for k.2 (0,4)
+            for i_c.4 (0,4)
+              for j_c.4 (0,2)
+                compute.local = ...
+    for i.3 (0,4)
+      for j.3 (0,6)
+        compute = ...
+
+==================================================
+No: 995 GFLOPS: 2796.72 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.83, Tstamp:1702081254.15)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,48)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,3)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,8)
+          for j_c.3 (0,2)
+            for k.2 (0,2)
+              for i_c.4 (0,2)
+                for j_c.4 (0,3)
+                  compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 996 GFLOPS: 2923.25 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.79, Tstamp:1702081255.88)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,96)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,4)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,4)
+          for j_c.3 (0,6)
+            for k.2 (0,2)
+              for i_c.4 (0,2)
+                compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 997 GFLOPS: 2717.06 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.84, Tstamp:1702081257.65)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,24)
+        for ax0@ax1@.0.0 (0,2)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,3)
+              b.shared = ...
+        for ax0@ax1@.0.0 (0,32)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,32)
+          for i_c.3 (0,2)
+            for j_c.3 (0,3)
+              for j_c.4 (0,2)
+                compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 998 GFLOPS: 0.00 / 3711.20  results: MeasureResult(error_type:CompileHostError, error_msg:Traceback (most recent call last):
+  File "/Users/victoryang00/miniforge3/envs/tvm-m1/lib/python3.10/site-packages/tvm-0.15.dev78+g1994f402e6-py3.10-macosx-11.0-arm64.egg/tvm/auto_scheduler/measure.py", line 633, in _local_build_worker
+    func = build_mod
+...
+nternalError: Traceback (most recent call last):
+  File "/Users/victoryang00/CLionProjects/CSE211-homework/HW4/tvm/src/tir/transforms/storage_rewrite.cc", line 1466
+InternalError: Check failed: (me->coeff == 0 || info.factor() % me->coeff == 0) is false: 
+, all_cost:0.09, Tstamp:1702081257.67)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 1024
+      for k.0 (0,96)
+        for ax0@ax1@.0.0 (0,2)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,2)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            vectorize ax0@ax1@.1 (0,4)
+              a.shared = ...
+        for j_c.3 (0,6)
+          for k.2 (0,8)
+            for i_c.4 (0,2)
+              compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 999 GFLOPS: 3239.72 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.83, Tstamp:1702081259.38)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 64
+      for k.0 (0,48)
+        for ax0@ax1@.0.0 (0,3)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,4)
+          for i_c.3 (0,2)
+            for j_c.3 (0,6)
+              for k.2 (0,4)
+                compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 1000        GFLOPS: 3042.20 / 3711.20       results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.79, Tstamp:1702081261.12)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 16
+      for k.0 (0,48)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,4)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for k.1 (0,8)
+          for i_c.3 (0,4)
+            for j_c.3 (0,3)
+              for k.2 (0,2)
+                compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,3)
+          compute = ...
+
+Time elapsed for measurement: 59.12 s
+----------------------------------------------------------------------
+------------------------------  [ Done ]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/victoryang00/CLionProjects/CSE211-homework/HW4/Apple-M1-BERT/gemm.py", line 87, in <module>
+    a_tvm = tvm.nd.array(a_np, ctx=ctx)
+TypeError: array() got an unexpected keyword argument 'ctx'
