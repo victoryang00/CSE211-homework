@@ -18,6 +18,7 @@ plt.rcParams.update(
 default_configs = ["M3Max Metal", "M3Max CPU", "Alderlake CPU", "4090 CUDA"]
 default_throughput = [3711.20, 473.08, 280.73, 12584.47]
 bert_performance = [72.1661376953125, 153.1397819519043, 135.153040885925, 62.1795]
+bert1_performance = [72.1661376953125, 153.1397819519043, 135.153040885925, 33.83706092834473]
 import matplotlib.pyplot as plt
 import numpy as np
 
