@@ -45,7 +45,7 @@ def swish_gemm(M, N, K):
 
 
 if __name__ == "__main__":
-    target = tvm.target.Target("metal --max_num_threads=1024")
+    target = tvm.target.Target("llvm -mcpu=sapphirerapids -mtriple=x86_64-linux-gnu")
     train_flag = True
     #target = tvm.target.Target("llvm -mcpu=apple-latest -mtriple=arm64-apple-darwin20.1.0")
 
@@ -53,13 +53,13 @@ if __name__ == "__main__":
     task = auto_scheduler.SearchTask(func=gemm,
                                      args=(M, N, K),
                                      target=target)
-    log_file = "gemm_{M}_{N}_{K}.json".format(M=M, N=N, K=K)
+    log_file = "gemm_{M}_{N}_{K}_cpu.json".format(M=M, N=N, K=K)
     # Inspect the computational graph
     print(task.compute_dag)
     
 
     if train_flag:
-      measure_runner = auto_scheduler.RPCRunner("m1", "127.0.0.1", 9190, min_repeat_ms=300, timeout=30, repeat=3)
+      measure_runner = auto_scheduler.RPCRunner("gpu", "127.0.0.1", 9190, min_repeat_ms=300, timeout=30, repeat=3)
       tune_option = auto_scheduler.TuningOptions(
         num_measure_trials=1000,
         runner=measure_runner,

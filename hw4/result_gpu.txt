@@ -1,0 +1,860 @@
+a = PLACEHOLDER [128, 768]
+b = PLACEHOLDER [3072, 768]
+compute(i, j) += (a[i, k]*b[j, k])
+
+Get devices for measurement successfully!
+----------------------------------------------------------------------
+------------------------------  [ Search ]
+----------------------------------------------------------------------
+Generate Sketches               #s: 1
+Sample Initial Population       #s: 95  fail_ct: 1953   Time elapsed: 1.63
+GA Iter: 0      Max score: 0.9795       Min score: 0.0003       #Pop: 95        #M+: 0  #M-: 0
+GA Iter: 4      Max score: 0.9998       Min score: 0.9778       #Pop: 128       #M+: 1397       #M-: 0
+EvolutionarySearch              #s: 128 Time elapsed: 14.52
+----------------------------------------------------------------------
+------------------------------  [ Measure ]
+----------------------------------------------------------------------
+Get 64 programs to measure:
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+................................INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+
+**********E**********************==================================================
+No: 1   GFLOPS: 661.19 / 661.19 results: MeasureResult(cost:[0.0009,0.0009,0.0009], error_no:0, all_cost:3.33, Tstamp:1702219065.05)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,12)
+  threadIdx.x i.2@j.2@ (0,64)
+    compute.local auto_unroll: 512
+    for k.0 (0,128)
+      for ax0@ax1@.0.0 (0,96)
+        threadIdx.x ax0@ax1@.0.1 (0,64)
+          b.shared = ...
+      for ax0@ax1@.0.0 (0,3)
+        threadIdx.x ax0@ax1@.0.1 (0,64)
+          a.shared = ...
+      for i_c.3 (0,4)
+        for k.2 (0,6)
+          for i_c.4 (0,8)
+            for j_c.4 (0,16)
+              compute.local = ...
+    for i.3 (0,32)
+      for j.3 (0,16)
+        compute = ...
+
+==================================================
+No: 2   GFLOPS: 54.65 / 661.19  results: MeasureResult(cost:[0.0110,0.0111,0.0111], error_no:0, all_cost:1.99, Tstamp:1702219066.37)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,2)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,384)
+      for k.0 (0,768)
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,384)
+            b.shared = ...
+        threadIdx.x ax0@ax1@.0.1 (0,384)
+          a.shared = ...
+        for i_c.3 (0,4)
+          for j_c.3 (0,4)
+            for i_c.4 (0,4)
+              for j_c.4 (0,4)
+                compute.local = ...
+      for i.3 (0,16)
+        for j.3 (0,16)
+          compute = ...
+
+==================================================
+No: 3   GFLOPS: 11822.33 / 11822.33     results: MeasureResult(cost:[0.0001,0.0001,0.0001], error_no:0, all_cost:1.79, Tstamp:1702219067.65)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  threadIdx.x i.2@j.2@ (0,96)
+    compute.local auto_unroll: 16
+    for k.0 (0,24)
+      for ax0@ax1@.0.0 (0,32)
+        threadIdx.x ax0@ax1@.0.1 (0,96)
+          b.shared = ...
+      for ax0@ax1@.0.0 (0,11)
+        threadIdx.x ax0@ax1@.0.1 (0,96)
+          a.shared = ...
+      for k.1 (0,8)
+        for i_c.3 (0,8)
+          for k.2 (0,4)
+            for i_c.4 (0,2)
+              for j_c.4 (0,2)
+                compute.local = ...
+    for i.3 (0,16)
+      for j.3 (0,2)
+        compute = ...
+
+==================================================
+No: 4   GFLOPS: 40.59 / 11822.33        results: MeasureResult(cost:[0.0145,0.0148,0.0154], error_no:0, all_cost:3.13, Tstamp:1702219069.78)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,4)
+  vthread i.1@j.1@ (0,6)
+    threadIdx.x i.2@j.2@ (0,64)
+      for k.0 (0,256)
+        for ax0@ax1@.0.0 (0,36)
+          threadIdx.x ax0@ax1@.0.1 (0,64)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,6)
+          threadIdx.x ax0@ax1@.0.1 (0,64)
+            a.shared = ...
+        for k.1 (0,3)
+          for j_c.3 (0,4)
+            for i_c.4 (0,16)
+              for j_c.4 (0,4)
+                compute.local = ...
+      for i.3 (0,16)
+        for j.3 (0,16)
+          compute = ...
+
+==================================================
+No: 5   GFLOPS: 86.81 / 11822.33        results: MeasureResult(cost:[0.0070,0.0068,0.0070], error_no:0, all_cost:6.96, Tstamp:1702219071.59)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,16)
+  vthread i.1@j.1@ (0,8)
+    threadIdx.x i.2@j.2@ (0,16)
+      compute.local auto_unroll: 512
+      for k.0 (0,256)
+        for ax0@ax1@.0.0 (0,72)
+          threadIdx.x ax0@ax1@.0.1 (0,16)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,12)
+          threadIdx.x ax0@ax1@.0.1 (0,16)
+            a.shared = ...
+        for i_c.3 (0,2)
+          for j_c.3 (0,3)
+            for k.2 (0,3)
+              for i_c.4 (0,2)
+                for j_c.4 (0,16)
+                  compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,48)
+          compute = ...
+
+==================================================
+No: 6   GFLOPS: 558.02 / 11822.33       results: MeasureResult(cost:[0.0011,0.0011,0.0011], error_no:0, all_cost:3.67, Tstamp:1702219073.28)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,16)
+  vthread i.1@j.1@ (0,8)
+    threadIdx.x i.2@j.2@ (0,32)
+      compute.local auto_unroll: 1024
+      for k.0 (0,64)
+        for ax0@ax1@.0.0 (0,72)
+          threadIdx.x ax0@ax1@.0.1 (0,32)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,48)
+          threadIdx.x ax0@ax1@.0.1 (0,32)
+            a.shared = ...
+        for k.1 (0,3)
+          for j_c.3 (0,12)
+            for k.2 (0,4)
+              for i_c.4 (0,4)
+                for j_c.4 (0,2)
+                  compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,24)
+          compute = ...
+
+==================================================
+No: 7   GFLOPS: 8167.53 / 11822.33      results: MeasureResult(cost:[0.0001,0.0001,0.0001], error_no:0, all_cost:1.97, Tstamp:1702219074.56)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,64)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,192)
+      compute.local auto_unroll: 512
+      for k.0 (0,96)
+        for ax0@ax1@.0.0 (0,2)
+          threadIdx.x ax0@ax1@.0.1 (0,192)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,6)
+          threadIdx.x ax0@ax1@.0.1 (0,192)
+            a.shared = ...
+        for i_c.3 (0,4)
+          for j_c.3 (0,2)
+            for k.2 (0,8)
+              for i_c.4 (0,2)
+                compute.local = ...
+      for i.3 (0,8)
+        for j.3 (0,2)
+          compute = ...
+
+==================================================
+No: 8   GFLOPS: 4767.59 / 11822.33      results: MeasureResult(cost:[0.0001,0.0001,0.0001], error_no:0, all_cost:2.60, Tstamp:1702219075.90)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,192)
+  vthread i.1@j.1@ (0,8)
+    threadIdx.x i.2@j.2@ (0,16)
+      compute.local auto_unroll: 1024
+      for k.0 (0,16)
+        for ax0@ax1@.0.0 (0,96)
+          threadIdx.x ax0@ax1@.0.1 (0,16)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,192)
+          threadIdx.x ax0@ax1@.0.1 (0,16)
+            a.shared = ...
+        for k.1 (0,24)
+          for j_c.3 (0,4)
+            for k.2 (0,2)
+              for i_c.4 (0,4)
+                compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,4)
+          compute = ...
+
+==================================================
+No: 9   GFLOPS: 6319.91 / 11822.33      results: MeasureResult(cost:[0.0001,0.0001,0.0001], error_no:0, all_cost:1.74, Tstamp:1702219077.18)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,192)
+  threadIdx.x i.2@j.2@ (0,64)
+    for k.0 (0,32)
+      for ax0@ax1@.0.0 (0,3)
+        threadIdx.x ax0@ax1@.0.1 (0,64)
+          vectorize ax0@ax1@.1 (0,2)
+            b.shared = ...
+      for ax0@ax1@.0.0 (0,48)
+        threadIdx.x ax0@ax1@.0.1 (0,64)
+          a.shared = ...
+      for k.1 (0,6)
+        for i_c.3 (0,2)
+          for j_c.3 (0,2)
+            for k.2 (0,4)
+              for i_c.4 (0,4)
+                for j_c.4 (0,2)
+                  compute.local = ...
+    for i.3 (0,8)
+      for j.3 (0,4)
+        compute = ...
+
+==================================================
+No: 10  GFLOPS: 0.00 / 11822.33 results: MeasureResult(error_type:RuntimeDeviceError, error_msg:Traceback (most recent call last):
+  File "/home/victoryang00/Documents/anaconda3/lib/python3.11/site-packages/tvm-0.15.dev0-py3.11-linux-x86_64.egg/tvm/auto_scheduler/measure.py", line 1142, in _rpc_run
+    func.entry_func(*loc_args)
+  File "tvm/_ffi/_cyt
+...
+ Error caught from RPC call:
+[06:37:57] /media/victoryang00/Downloads/cse211/hw4/tvm/src/runtime/library_module.cc:76: InternalError: Check failed: ret == 0 (-1 vs. 0) : TVMError: CUDALaunch Error: CUDA_ERROR_OUT_OF_MEMORY
+ grid=(1,1,1),  block=(16,1,1)
+
+
+, all_cost:2.41, Tstamp:1702219078.03)
+==================================================
+Placeholder: a, b
+vthread i.1@j.1@ (0,8)
+  threadIdx.x i.2@j.2@ (0,16)
+    compute.local auto_unroll: 16
+    for k.0 (0,384)
+      for ax0@ax1@.0.0 (0,192)
+        threadIdx.x ax0@ax1@.0.1 (0,16)
+          vectorize ax0@ax1@.1 (0,2)
+            b.shared = ...
+      for ax0@ax1@.0.0 (0,16)
+        threadIdx.x ax0@ax1@.0.1 (0,16)
+          a.shared = ...
+      for k.1 (0,2)
+        for i_c.3 (0,16)
+          for j_c.3 (0,6)
+            for i_c.4 (0,2)
+              for j_c.4 (0,16)
+                compute.local = ...
+    for i.3 (0,32)
+      for j.3 (0,96)
+        compute = ...
+
+==================================================
+No: 11  GFLOPS: 3637.39 / 11822.33      results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:31.68, Tstamp:1702219109.21)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,64)
+  vthread i.1@j.1@ (0,4)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 512
+      for k.0 (0,768)
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          b.shared = ...
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          a.shared = ...
+        for j_c.3 (0,6)
+          for j_c.4 (0,2)
+            compute.local = ...
+      for j.3 (0,12)
+        compute = ...
+
+==================================================
+No: 12  GFLOPS: 431.24 / 11822.33       results: MeasureResult(cost:[0.0014,0.0014,0.0014], error_no:0, all_cost:1.82, Tstamp:1702219110.50)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,8)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,384)
+      compute.local auto_unroll: 1024
+      for k.0 (0,768)
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,384)
+            b.shared = ...
+        threadIdx.x ax0@ax1@.0.1 (0,384)
+          a.shared = ...
+        for j_c.3 (0,4)
+          for i_c.4 (0,4)
+            for j_c.4 (0,4)
+              compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,16)
+          compute = ...
+
+==================================================
+No: 13  GFLOPS: 3112.34 / 11822.33      results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.89, Tstamp:1702219111.77)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,64)
+  vthread i.1@j.1@ (0,4)
+    threadIdx.x i.2@j.2@ (0,48)
+      for k.0 (0,48)
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,48)
+            vectorize ax0@ax1@.1 (0,2)
+              b.shared = ...
+        for ax0@ax1@.0.0 (0,22)
+          threadIdx.x ax0@ax1@.0.1 (0,48)
+            a.shared = ...
+        for k.1 (0,2)
+          for j_c.3 (0,2)
+            for k.2 (0,8)
+              for i_c.4 (0,4)
+                for j_c.4 (0,4)
+                  compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,8)
+          compute = ...
+
+==================================================
+No: 14  GFLOPS: 134.67 / 11822.33       results: MeasureResult(cost:[0.0044,0.0045,0.0045], error_no:0, all_cost:3.52, Tstamp:1702219113.72)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,32)
+  vthread i.1@j.1@ (0,4)
+    threadIdx.x i.2@j.2@ (0,4)
+      compute.local auto_unroll: 64
+      for k.0 (0,48)
+        for ax0@ax1@.0.0 (0,128)
+          threadIdx.x ax0@ax1@.0.1 (0,4)
+            vectorize ax0@ax1@.1 (0,3)
+              b.shared = ...
+        for ax0@ax1@.0.0 (0,512)
+          threadIdx.x ax0@ax1@.0.1 (0,4)
+            a.shared = ...
+        for k.1 (0,4)
+          for i_c.3 (0,2)
+            for j_c.3 (0,6)
+              for k.2 (0,4)
+                for i_c.4 (0,64)
+                  compute.local = ...
+      for i.3 (0,128)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 15  GFLOPS: 56.60 / 11822.33        results: MeasureResult(cost:[0.0107,0.0107,0.0107], error_no:0, all_cost:2.98, Tstamp:1702219115.03)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,4)
+  vthread i.1@j.1@ (0,8)
+    threadIdx.x i.2@j.2@ (0,32)
+      compute.local auto_unroll: 16
+      for k.0 (0,64)
+        for ax0@ax1@.0.0 (0,96)
+          threadIdx.x ax0@ax1@.0.1 (0,32)
+            vectorize ax0@ax1@.1 (0,3)
+              b.shared = ...
+        for ax0@ax1@.0.0 (0,48)
+          threadIdx.x ax0@ax1@.0.1 (0,32)
+            a.shared = ...
+        for k.1 (0,2)
+          for i_c.3 (0,2)
+            for j_c.3 (0,3)
+              for k.2 (0,6)
+                for i_c.4 (0,4)
+                  for j_c.4 (0,16)
+                    compute.local = ...
+      for i.3 (0,8)
+        for j.3 (0,48)
+          compute = ...
+
+==================================================
+No: 16  GFLOPS: 1490.29 / 11822.33      results: MeasureResult(cost:[0.0004,0.0004,0.0004], error_no:0, all_cost:1.75, Tstamp:1702219116.29)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,32)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 16
+      for k.0 (0,256)
+        for ax0@ax1@.0.0 (0,36)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          a.shared = ...
+        for k.1 (0,3)
+          for j_c.3 (0,3)
+            for i_c.4 (0,4)
+              for j_c.4 (0,4)
+                compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,12)
+          compute = ...
+
+==================================================
+No: 17  GFLOPS: 291.44 / 11822.33       results: MeasureResult(cost:[0.0021,0.0021,0.0021], error_no:0, all_cost:2.04, Tstamp:1702219117.57)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,8)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      for k.0 (0,48)
+        for ax0@ax1@.0.0 (0,48)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            a.shared = ...
+        for i_c.3 (0,4)
+          for j_c.3 (0,4)
+            for k.2 (0,16)
+              for i_c.4 (0,4)
+                for j_c.4 (0,3)
+                  compute.local = ...
+      for i.3 (0,16)
+        for j.3 (0,12)
+          compute = ...
+
+==================================================
+No: 18  GFLOPS: 399.52 / 11822.33       results: MeasureResult(cost:[0.0015,0.0015,0.0015], error_no:0, all_cost:2.76, Tstamp:1702219118.82)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,16)
+  vthread i.1@j.1@ (0,4)
+    threadIdx.x i.2@j.2@ (0,64)
+      compute.local auto_unroll: 1024
+      for k.0 (0,256)
+        for ax0@ax1@.0.0 (0,72)
+          threadIdx.x ax0@ax1@.0.1 (0,64)
+            b.shared = ...
+        threadIdx.x ax0@ax1@.0.1 (0,64)
+          a.shared = ...
+        for k.1 (0,3)
+          for i_c.3 (0,8)
+            for i_c.4 (0,2)
+              for j_c.4 (0,6)
+                compute.local = ...
+      for i.3 (0,16)
+        for j.3 (0,6)
+          compute = ...
+
+==================================================
+No: 19  GFLOPS: 13807.98 / 13807.98     results: MeasureResult(cost:[0.0000,0.0000,0.0000], error_no:0, all_cost:2.33, Tstamp:1702219120.08)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,256)
+  threadIdx.x i.2@j.2@ (0,48)
+    compute.local auto_unroll: 1024
+    for k.0 (0,48)
+      for ax0@ax1@.0.0 (0,8)
+        threadIdx.x ax0@ax1@.0.1 (0,48)
+          vectorize ax0@ax1@.1 (0,2)
+            b.shared = ...
+      for ax0@ax1@.0.0 (0,6)
+        threadIdx.x ax0@ax1@.0.1 (0,48)
+          vectorize ax0@ax1@.1 (0,2)
+            a.shared = ...
+      for i_c.3 (0,8)
+        for k.2 (0,16)
+          for i_c.4 (0,2)
+            for j_c.4 (0,2)
+              compute.local = ...
+    for i.3 (0,16)
+      for j.3 (0,2)
+        compute = ...
+
+==================================================
+No: 20  GFLOPS: 13773.17 / 13807.98     results: MeasureResult(cost:[0.0000,0.0000,0.0000], error_no:0, all_cost:2.05, Tstamp:1702219121.35)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,128)
+  vthread i.1@j.1@ (0,2)
+    threadIdx.x i.2@j.2@ (0,128)
+      compute.local auto_unroll: 1024
+      for k.0 (0,48)
+        for ax0@ax1@.0.0 (0,12)
+          threadIdx.x ax0@ax1@.0.1 (0,128)
+            b.shared = ...
+        threadIdx.x ax0@ax1@.0.1 (0,128)
+          vectorize ax0@ax1@.1 (0,4)
+            a.shared = ...
+        for i_c.3 (0,4)
+          for k.2 (0,16)
+            for j_c.4 (0,3)
+              compute.local = ...
+      for i.3 (0,4)
+        for j.3 (0,3)
+          compute = ...
+
+==================================================
+No: 21  GFLOPS: 5288.51 / 13807.98      results: MeasureResult(cost:[0.0001,0.0001,0.0001], error_no:0, all_cost:1.68, Tstamp:1702219122.59)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,48)
+  vthread i.1@j.1@ (0,4)
+    threadIdx.x i.2@j.2@ (0,1024)
+      for k.0 (0,96)
+        threadIdx.x ax0@ax1@.0.1 (0,1024)
+          b.shared = ...
+        threadIdx.x ax0@ax1@.0.1 (0,1024)
+          a.shared = ...
+        for k.2 (0,8)
+          for i_c.4 (0,2)
+            compute.local = ...
+      for i.3 (0,2)
+        compute = ...
+
+==================================================
+No: 22  GFLOPS: 1712.80 / 13807.98      results: MeasureResult(cost:[0.0004,0.0004,0.0004], error_no:0, all_cost:2.47, Tstamp:1702219123.86)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,32)
+  vthread i.1@j.1@ (0,8)
+    threadIdx.x i.2@j.2@ (0,48)
+      compute.local auto_unroll: 512
+      for k.0 (0,96)
+        for ax0@ax1@.0.0 (0,64)
+          threadIdx.x ax0@ax1@.0.1 (0,48)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,6)
+          threadIdx.x ax0@ax1@.0.1 (0,48)
+            a.shared = ...
+        for k.1 (0,2)
+          for i_c.3 (0,8)
+            for j_c.3 (0,4)
+              for k.2 (0,4)
+                compute.local = ...
+      for i.3 (0,8)
+        for j.3 (0,4)
+          compute = ...
+
+==================================================
+No: 23  GFLOPS: 8458.34 / 13807.98      results: MeasureResult(cost:[0.0001,0.0001,0.0001], error_no:0, all_cost:2.70, Tstamp:1702219125.10)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,512)
+  vthread i.1@j.1@ (0,8)
+    threadIdx.x i.2@j.2@ (0,32)
+      compute.local auto_unroll: 512
+      for k.0 (0,4)
+        for ax0@ax1@.0.0 (0,288)
+          threadIdx.x ax0@ax1@.0.1 (0,32)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,96)
+          threadIdx.x ax0@ax1@.0.1 (0,32)
+            a.shared = ...
+        for k.1 (0,12)
+          for k.2 (0,16)
+            for j_c.4 (0,3)
+              compute.local = ...
+      for j.3 (0,3)
+        compute = ...
+
+==================================================
+No: 24  GFLOPS: 6691.03 / 13807.98      results: MeasureResult(cost:[0.0001,0.0001,0.0001], error_no:0, all_cost:2.72, Tstamp:1702219126.36)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,64)
+  vthread i.1@j.1@ (0,8)
+    threadIdx.x i.2@j.2@ (0,64)
+      compute.local auto_unroll: 1024
+      for k.0 (0,48)
+        for ax0@ax1@.0.0 (0,24)
+          threadIdx.x ax0@ax1@.0.1 (0,64)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,16)
+          threadIdx.x ax0@ax1@.0.1 (0,64)
+            a.shared = ...
+        for k.1 (0,2)
+          for j_c.3 (0,6)
+            for k.2 (0,8)
+              for j_c.4 (0,2)
+                compute.local = ...
+      for j.3 (0,12)
+        compute = ...
+
+==================================================
+No: 25  GFLOPS: 2443.33 / 13807.98      results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.86, Tstamp:1702219127.61)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,192)
+  vthread i.1@j.1@ (0,4)
+    threadIdx.x i.2@j.2@ (0,32)
+      compute.local auto_unroll: 64
+      for k.0 (0,64)
+        for ax0@ax1@.0.0 (0,96)
+          threadIdx.x ax0@ax1@.0.1 (0,32)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,3)
+          threadIdx.x ax0@ax1@.0.1 (0,32)
+            a.shared = ...
+        for j_c.3 (0,8)
+          for k.2 (0,12)
+            for i_c.4 (0,2)
+              compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,8)
+          compute = ...
+
+==================================================
+No: 26  GFLOPS: 11329.52 / 13807.98     results: MeasureResult(cost:[0.0001,0.0001,0.0001], error_no:0, all_cost:1.73, Tstamp:1702219128.86)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,256)
+  vthread i.1@j.1@ (0,8)
+    threadIdx.x i.2@j.2@ (0,48)
+      compute.local auto_unroll: 64
+      for k.0 (0,192)
+        for ax0@ax1@.0.0 (0,4)
+          threadIdx.x ax0@ax1@.0.1 (0,48)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,3)
+          threadIdx.x ax0@ax1@.0.1 (0,48)
+            a.shared = ...
+        for k.2 (0,4)
+          for i_c.4 (0,2)
+            for j_c.4 (0,2)
+              compute.local = ...
+      for i.3 (0,2)
+        for j.3 (0,2)
+          compute = ...
+
+==================================================
+No: 27  GFLOPS: 937.12 / 13807.98       results: MeasureResult(cost:[0.0006,0.0006,0.0006], error_no:0, all_cost:1.94, Tstamp:1702219130.12)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,8)
+  vthread i.1@j.1@ (0,8)
+    threadIdx.x i.2@j.2@ (0,384)
+      compute.local auto_unroll: 16
+      for k.0 (0,32)
+        for ax0@ax1@.0.0 (0,24)
+          threadIdx.x ax0@ax1@.0.1 (0,384)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,384)
+            a.shared = ...
+        for k.1 (0,6)
+          for i_c.3 (0,8)
+            for k.2 (0,4)
+              for j_c.4 (0,2)
+                compute.local = ...
+      for i.3 (0,8)
+        for j.3 (0,2)
+          compute = ...
+
+==================================================
+No: 28  GFLOPS: 2999.67 / 13807.98      results: MeasureResult(cost:[0.0002,0.0002,0.0002], error_no:0, all_cost:1.85, Tstamp:1702219131.39)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,192)
+  threadIdx.x i.2@j.2@ (0,64)
+    compute.local auto_unroll: 512
+    for k.0 (0,96)
+      for ax0@ax1@.0.0 (0,32)
+        threadIdx.x ax0@ax1@.0.1 (0,64)
+          b.shared = ...
+      threadIdx.x ax0@ax1@.0.1 (0,64)
+        a.shared = ...
+      for k.1 (0,8)
+        for i_c.3 (0,2)
+          for j_c.3 (0,2)
+            for j_c.4 (0,8)
+              compute.local = ...
+    for i.3 (0,2)
+      for j.3 (0,16)
+        compute = ...
+
+==================================================
+No: 29  GFLOPS: 483.93 / 13807.98       results: MeasureResult(cost:[0.0013,0.0012,0.0012], error_no:0, all_cost:2.44, Tstamp:1702219132.64)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,24)
+  vthread i.1@j.1@ (0,4)
+    threadIdx.x i.2@j.2@ (0,32)
+      compute.local auto_unroll: 64
+      for k.0 (0,128)
+        for ax0@ax1@.0.0 (0,24)
+          threadIdx.x ax0@ax1@.0.1 (0,32)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,12)
+          threadIdx.x ax0@ax1@.0.1 (0,32)
+            vectorize ax0@ax1@.1 (0,2)
+              a.shared = ...
+        for i_c.3 (0,2)
+          for k.2 (0,6)
+            for i_c.4 (0,64)
+              compute.local = ...
+      for i.3 (0,128)
+        compute = ...
+
+==================================================
+No: 30  GFLOPS: 6345.90 / 13807.98      results: MeasureResult(cost:[0.0001,0.0001,0.0001], error_no:0, all_cost:1.74, Tstamp:1702219133.88)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,768)
+  threadIdx.x i.2@j.2@ (0,256)
+    compute.local auto_unroll: 512
+    for k.0 (0,32)
+      threadIdx.x ax0@ax1@.0.1 (0,256)
+        vectorize ax0@ax1@.1 (0,36)
+          b.shared = ...
+      for ax0@ax1@.0.0 (0,12)
+        threadIdx.x ax0@ax1@.0.1 (0,256)
+          a.shared = ...
+      for k.1 (0,24)
+        for j_c.3 (0,2)
+          compute.local = ...
+    for j.3 (0,2)
+      compute = ...
+
+==================================================
+No: 31  GFLOPS: 7703.17 / 13807.98      results: MeasureResult(cost:[0.0001,0.0001,0.0001], error_no:0, all_cost:1.89, Tstamp:1702219135.13)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,1024)
+  threadIdx.x i.2@j.2@ (0,64)
+    compute.local auto_unroll: 512
+    for k.0 (0,16)
+      for ax0@ax1@.0.0 (0,36)
+        threadIdx.x ax0@ax1@.0.1 (0,64)
+          b.shared = ...
+      for ax0@ax1@.0.0 (0,6)
+        threadIdx.x ax0@ax1@.0.1 (0,64)
+          a.shared = ...
+      for k.1 (0,12)
+        for k.2 (0,4)
+          for i_c.4 (0,2)
+            for j_c.4 (0,3)
+              compute.local = ...
+    for i.3 (0,2)
+      for j.3 (0,3)
+        compute = ...
+
+==================================================
+No: 32  GFLOPS: 7238.93 / 13807.98      results: MeasureResult(cost:[0.0001,0.0001,0.0001], error_no:0, all_cost:2.51, Tstamp:1702219136.38)
+==================================================
+Placeholder: a, b
+blockIdx.x i.0@j.0@ (0,64)
+  vthread i.1@j.1@ (0,8)
+    threadIdx.x i.2@j.2@ (0,64)
+      compute.local auto_unroll: 1024
+      for k.0 (0,24)
+        for ax0@ax1@.0.0 (0,48)
+          threadIdx.x ax0@ax1@.0.1 (0,64)
+            b.shared = ...
+        for ax0@ax1@.0.0 (0,8)
+          threadIdx.x ax0@ax1@.0.1 (0,64)
+            vectorize ax0@ax1@.1 (0,4)
+              a.shared = ...
+        for k.1 (0,4)
+          for j_c.3 (0,6)
+            for k.2 (0,8)
+              for j_c.4 (0,2)
+                compute.local = ...
+      for j.3 (0,12)
+        compute = ...
+
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+................................INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+Traceback (most recent call last):
+  File "/media/victoryang00/Downloads/cse211/hw4/gemm_gpu.py", line 69, in <module>
+    task.tune(tune_option)
+  File "/home/victoryang00/Documents/anaconda3/lib/python3.11/site-packages/tvm-0.15.dev0-py3.11-linux-x86_64.egg/tvm/auto_scheduler/search_task.py", line 493, in tune
+    _ffi_api.AutoSchedule(search_policy, tuning_options)
+  File "tvm/_ffi/_cython/./packed_func.pxi", line 332, in tvm._ffi._cy3.core.PackedFuncBase.__call__
+  File "tvm/_ffi/_cython/./packed_func.pxi", line 263, in tvm._ffi._cy3.core.FuncCall
+  File "tvm/_ffi/_cython/./packed_func.pxi", line 252, in tvm._ffi._cy3.core.FuncCall3
+  File "tvm/_ffi/_cython/./base.pxi", line 182, in tvm._ffi._cy3.core.CHECK_CALL
+  File "/home/victoryang00/Documents/anaconda3/lib/python3.11/site-packages/tvm-0.15.dev0-py3.11-linux-x86_64.egg/tvm/_ffi/base.py", line 481, in raise_last_ffi_error
+    raise py_err
+  File "tvm/_ffi/_cython/./packed_func.pxi", line 56, in tvm._ffi._cy3.core.tvm_callback
+  File "/home/victoryang00/Documents/anaconda3/lib/python3.11/site-packages/tvm-0.15.dev0-py3.11-linux-x86_64.egg/tvm/auto_scheduler/measure.py", line 1317, in rpc_runner_run
+    assert res.status == StatusKind.TIMEOUT
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+INFO:numexpr.utils:Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
